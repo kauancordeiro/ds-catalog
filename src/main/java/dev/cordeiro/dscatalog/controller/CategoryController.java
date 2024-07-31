@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -27,7 +28,10 @@ public class CategoryController {
         }else{
             return ResponseEntity.noContent().build();
         }
-
-
+    }
+    @GetMapping("/{id}")
+    ResponseEntity<CategoryDTO> findById(@PathVariable long id){
+        CategoryDTO categoryDTO = service.findById(id);
+        return ResponseEntity.ok().body(categoryDTO);
     }
 }
