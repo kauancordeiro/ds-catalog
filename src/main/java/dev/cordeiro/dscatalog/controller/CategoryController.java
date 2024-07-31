@@ -1,5 +1,6 @@
 package dev.cordeiro.dscatalog.controller;
 
+import dev.cordeiro.dscatalog.dtos.CategoryDTO;
 import dev.cordeiro.dscatalog.entities.Category;
 import dev.cordeiro.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping
-    ResponseEntity<List<Category>> findaALl(){
-        List<Category> list = service.findAll();
+    ResponseEntity<List<CategoryDTO>> findaALl(){
+        List<CategoryDTO> list = service.findAll();
         if(!list.isEmpty()){
             return ResponseEntity.ok().body(list);
         }else{
