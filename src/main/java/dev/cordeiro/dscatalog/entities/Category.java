@@ -1,5 +1,6 @@
 package dev.cordeiro.dscatalog.entities;
 
+import dev.cordeiro.dscatalog.dtos.CategoryDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,9 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    public Category (CategoryDTO categoryDTO){
+        this.name = categoryDTO.getName();
+    }
 
 }
