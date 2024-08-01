@@ -3,6 +3,7 @@ package dev.cordeiro.dscatalog.services;
 import dev.cordeiro.dscatalog.dtos.CategoryDTO;
 import dev.cordeiro.dscatalog.entities.Category;
 import dev.cordeiro.dscatalog.repositories.CategoryRepository;
+import dev.cordeiro.dscatalog.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,6 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(long id) {
         Optional<Category> category = repository.findById(id);
-        return category.map(CategoryDTO::new).orElse(null);
+        return category.map(CategoryDTO::new).orElseThrow(() -> new EntityNotFoundException("Entity not found"));
     }
 }
