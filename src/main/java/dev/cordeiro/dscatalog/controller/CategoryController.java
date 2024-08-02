@@ -5,6 +5,9 @@ import dev.cordeiro.dscatalog.entities.Category;
 import dev.cordeiro.dscatalog.services.CategoryService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,13 +26,18 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping
-    ResponseEntity<List<CategoryDTO>> findaALl() {
-        List<CategoryDTO> list = service.findAll();
-        if (!list.isEmpty()) {
-            return ResponseEntity.ok().body(list);
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+    ResponseEntity<Page<CategoryDTO>> findaALl(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+    ) {
+
+        PageRequest pageRequest = PageRequest.of(page,pageSize, Sort.Direction.valueOf(direction), orderBy);
+
+        Page<CategoryDTO> list = service.findAllPaged(pageRequest);
+
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
