@@ -41,18 +41,18 @@ public class ProductController {
         return ResponseEntity.ok().body(ProductDTO);
     }
 
-//    @PostMapping
-//    ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO ProductDTO) {
-//
-//        ProductDTO = service.insert(ProductDTO);
-//
-//        URI uri = ServletUriComponentsBuilder
-//                .fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(ProductDTO.getId())
-//                .toUri();
-//
-//        return ResponseEntity.created(uri).body(ProductDTO);
-//    }
+    @PostMapping
+    ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO ProductDTO) {
+
+        ProductDTO = service.insert(ProductDTO);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(ProductDTO.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(ProductDTO);
+    }
 
     @PutMapping("/{id}")
     ResponseEntity<ProductDTO> update(@RequestBody ProductDTO ProductDTO, @PathVariable Long id) {
