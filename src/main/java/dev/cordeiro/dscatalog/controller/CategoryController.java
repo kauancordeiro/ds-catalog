@@ -7,6 +7,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +27,9 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping
-    ResponseEntity<Page<CategoryDTO>> findaALl(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
-    ) {
+    ResponseEntity<Page<CategoryDTO>> findaALl(Pageable pageable/* page, size, sort */) {
 
-        PageRequest pageRequest = PageRequest.of(page,pageSize, Sort.Direction.valueOf(direction), orderBy);
-
-        Page<CategoryDTO> list = service.findAllPaged(pageRequest);
+        Page<CategoryDTO> list = service.findAllPaged(pageable);
 
         return ResponseEntity.ok().body(list);
     }

@@ -5,6 +5,7 @@ import dev.cordeiro.dscatalog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,16 +22,10 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    ResponseEntity<Page<ProductDTO>> findaALl(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
-    ) {
+    ResponseEntity<Page<ProductDTO>> findaALl(Pageable pageable/* page, size, sort */) {
 
-        PageRequest pageRequest = PageRequest.of(page,pageSize, Sort.Direction.valueOf(direction), orderBy);
 
-        Page<ProductDTO> list = service.findAllPaged(pageRequest);
+        Page<ProductDTO> list = service.findAllPaged(pageable);
 
         return ResponseEntity.ok().body(list);
     }
